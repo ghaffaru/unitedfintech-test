@@ -1,0 +1,10 @@
+[
+  {
+    "model": "auth.user",
+    "fields": {
+      "email": "admin@gmail.com",
+      "username": "admin",
+      "password": "pbkdf2_sha256$180000$r6nydaVa7SbF$yIJVpI60v0v13yroykpUJXAbhCKYVzTtC0E7B1Fxcls="
+    }
+  }
+]
