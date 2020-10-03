@@ -1,6 +1,9 @@
 from django.urls import path
-from . import views
+from .views import authViews, employeeCrudViews
 urlpatterns = [
 
-    path('login', views.LoginView.as_view())
+    path('login', authViews.LoginView.as_view()),
+
+    path('add_employee', employeeCrudViews.AddEmployeeView.as_view())
+
 ]
