@@ -82,3 +82,17 @@ class UpdateOneEmployee(APIView):
             else:
                 return Response(status=422, data=serializer.errors)
 
+
+class DeleteEmployee(APIView):
+
+    def delete(self, request, id):
+        try:
+            employee = db['employees'].find_one({'_id': ObjectId(id)})
+
+            db['employees'].delete_one({"_id": ObjectId(id)})
+
+            return Response(status=204)
+
+        except:
+            return Response(status=404, data={'message': 'Not Found'})
+
