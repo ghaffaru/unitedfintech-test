@@ -7,7 +7,7 @@ class LoginSerializer(serializers.Serializer):
 
     password = serializers.CharField(required=True)
 
-class AddEmployeeSerializer(serializers.Serializer):
+class EmployeeSerializer(serializers.Serializer):
 
     firstName = serializers.CharField(required=True
                                       )

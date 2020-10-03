@@ -2,11 +2,12 @@ from rest_framework.views import APIView
 from .. import serializers
 from unitedfintech_test.mongo import db
 from rest_framework.response import  Response
-class AddEmployeeView(APIView):
+
+class EmployeeView(APIView):
 
     def post(self, request):
 
-        serializer = serializers.AddEmployeeSerializer(data=request.data)
+        serializer = serializers.EmployeeSerializer(data=request.data)
 
         if serializer.is_valid():
 
@@ -26,12 +27,18 @@ class AddEmployeeView(APIView):
                 }).inserted_id
 
                 return Response(status=201, data={'success': True,
-                                                  'employee':  serializers.AddEmployeeSerializer(db['employees'].find_one({'_id': employee})).data})
+                                                  'employee':  serializers.EmployeeSerializer(db['employees'].find_one({'_id': employee})).data})
 
 
 
         else:
 
             return Response(status=422, data=serializer.errors)
+
+    def get(self, request):
+
+        employees = db['employees'].find()
+
+        return Response(status=200, data={'employees': serializers.EmployeeSerializer(employees, many=True).data})
 
 

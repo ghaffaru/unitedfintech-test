@@ -4,6 +4,6 @@ urlpatterns = [
 
     path('login', authViews.LoginView.as_view()),
 
-    path('add_employee', employeeCrudViews.AddEmployeeView.as_view())
+    path('employee', employeeCrudViews.EmployeeView.as_view())
 
 ]
