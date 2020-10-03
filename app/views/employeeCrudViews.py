@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from .. import serializers
 from unitedfintech_test.mongo import db
 from rest_framework.response import  Response
-
+from bson.objectid import ObjectId
 class EmployeeView(APIView):
 
     def post(self, request):
@@ -41,4 +41,44 @@ class EmployeeView(APIView):
 
         return Response(status=200, data={'employees': serializers.EmployeeSerializer(employees, many=True).data})
 
+
+
+class FetchOneEmployee(APIView):
+
+    def get(self, request, id):
+
+        employee = db['employees'].find_one({'_id': ObjectId(id)})
+        print(employee)
+        if not employee:
+            return Response(status=404, data={'message': 'Not Found'})
+        else:
+            return Response(status=200, data={'employee': serializers.EmployeeSerializer(employee).data})
+
+
+class UpdateOneEmployee(APIView):
+
+    def put(self, request, id):
+
+        employee = db['employees'].find_one({'_id': ObjectId(id)})
+
+        if not employee:
+            return Response(status=404, data={'message': 'Not Found'})
+        else:
+
+            serializer = serializers.EmployeeSerializer(data=request.data)
+
+            if serializer.is_valid():
+                db['employees'].update_one({"_id": ObjectId(id)},{"$set": {
+                    "firstName": serializer.validated_data['firstName'],
+                    "lastName": serializer.validated_data['lastName'],
+                    "address": serializer.validated_data['address'],
+                    "telephone": serializer.validated_data['telephone'],
+                    "salary": serializer.validated_data['salary']
+                }})
+
+                return Response(status=200, data={'success': True,
+                                                  'employee': serializers.EmployeeSerializer(
+                                                      db['employees'].find_one({'_id': ObjectId(id)})).data})
+            else:
+                return Response(status=422, data=serializer.errors)
 

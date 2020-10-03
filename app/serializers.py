@@ -9,6 +9,8 @@ class LoginSerializer(serializers.Serializer):
 
 class EmployeeSerializer(serializers.Serializer):
 
+    _id = serializers.CharField(read_only=True)
+
     firstName = serializers.CharField(required=True
                                       )
 
