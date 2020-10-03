@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import environ
+
+env = environ.Env()
+# reading .env file
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -85,7 +90,7 @@ DATABASES = {
         'ENGINE': 'djongo',
         'NAME': 'employees',
         'CLIENT': {
-           'host': 'db',
+           'host': env("DB_HOST", default="127.0.0.1"),
         }
     }
 }
