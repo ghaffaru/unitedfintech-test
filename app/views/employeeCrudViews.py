@@ -3,7 +3,9 @@ from .. import serializers
 from unitedfintech_test.mongo import db
 from rest_framework.response import  Response
 from bson.objectid import ObjectId
+from .. import permissions
 class EmployeeView(APIView):
+    permission_classes = (permissions.IsAdmin,)
 
     def post(self, request):
 
@@ -37,6 +39,7 @@ class EmployeeView(APIView):
 
     def get(self, request):
 
+
         employees = db['employees'].find()
 
         return Response(status=200, data={'employees': serializers.EmployeeSerializer(employees, many=True).data})
@@ -44,6 +47,7 @@ class EmployeeView(APIView):
 
 
 class FetchOneEmployee(APIView):
+    permission_classes = (permissions.IsAdmin,)
 
     def get(self, request, id):
 
@@ -56,7 +60,7 @@ class FetchOneEmployee(APIView):
 
 
 class UpdateOneEmployee(APIView):
-
+    permission_classes = (permissions.IsAdmin,)
     def put(self, request, id):
 
         employee = db['employees'].find_one({'_id': ObjectId(id)})
@@ -84,7 +88,7 @@ class UpdateOneEmployee(APIView):
 
 
 class DeleteEmployee(APIView):
-
+    permission_classes = (permissions.IsAdmin,)
     def delete(self, request, id):
         try:
             employee = db['employees'].find_one({'_id': ObjectId(id)})
