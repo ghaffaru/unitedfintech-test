@@ -2,3 +2,5 @@ bin
 lib
 lib64
 unitedfintech_test/.env
+app/.env
+app/views/.env
