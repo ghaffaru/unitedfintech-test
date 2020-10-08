@@ -21,6 +21,10 @@ docker-compose run web python manage.py addAdmin
 docker-compose up
 ```
 
+### Run Tests
+```
+docker-compose run web python manage.py test
+```
 ## APi Docs
 [Here](https://documenter.getpostman.com/view/6347827/TVRefBCC) 
 
